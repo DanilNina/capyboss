@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CapyBoss - Вызов мастера</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .shadow-custom { box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+        .hover-scale { transition: transform 0.3s ease; }
+        .hover-scale:hover { transform: scale(1.05); }
+        .btn-gradient { background: linear-gradient(90deg, #3b82f6, #1d4ed8); }
+        .task-list { max-height: 200px; overflow-y: auto; }
+        .service-card { cursor: pointer; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-gray-100 min-h-screen p-4">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 mt-4">
+            <i class="fas fa-tools text-blue-600 mr-2"></i> Вызов мастера
+        </h1>
+        <p class="text-center text-gray-600 mb-8">Выбери услугу и задачу!</p>
+
+        <div id="servicesContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+            <!-- Карточки добавляются через JS -->
+        </div>
+
+        <form id="orderForm" class="bg-white rounded-2xl shadow-custom p-8 w-full max-w-lg mx-auto hidden">
+            <div id="tasksContainer" class="space-y-4">
+                <h2 id="selectedService" class="text-xl font-semibold text-gray-800 mb-2"></h2>
+                <div id="taskList" class="task-list p-2 border border-gray-300 rounded-lg bg-gray-50"></div>
+                <button type="button" id="selectAll" class="mt-2 text-sm text-blue-600 hover:underline">Выбрать всё</button>
+            </div>
+
+            <div class="mt-6">
+                <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">Адрес</label>
+                <input type="text" id="address" name="address" required
+                    placeholder="Например, ул. Ленина 10"
+                    class="block w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+            </div>
+
+            <button type="submit" id="submitBtn"
+                class="w-full mt-6 p-3 btn-gradient text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                <i class="fas fa-phone-alt mr-2"></i> Вызвать мастера
+            </button>
+            <p id="status" class="text-center mt-4 text-green-600 font-medium"></p>
+        </form>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</body>
+</html>
