@@ -16,8 +16,12 @@
     ],
     "routes": [
         {
+            "src": "/(script.js|.*\\.png)",
+            "dest": "/$1"
+        },
+        {
             "src": "/(.*)",
-            "dest": "index.html"
+            "dest": "/index.html"
         }
     ]
 }
