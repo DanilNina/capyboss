@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CapyBoss — услуги по ремонту и строительству с милыми капибарами!">
+    <meta name="keywords" content="ремонт, электрика, сантехника, капибара, CapyBoss">
     <title>CapyBoss - Услуги мастеров</title>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,19 +19,30 @@
             font-size: 24px;
             margin-bottom: 20px;
         }
+        .services-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
         .service-card {
-            display: inline-block;
-            margin: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            width: 120px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .service-card:hover {
             transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        lottie-player {
+        .service-icon {
             width: 100px;
             height: 100px;
+            object-fit: contain;
         }
         p {
             color: #333;
@@ -40,6 +52,11 @@
         .subservices {
             display: none;
             margin-top: 20px;
+        }
+        .subservices h2 {
+            color: #2DD4BF;
+            font-size: 20px;
+            margin-bottom: 15px;
         }
         .subservice-btn {
             display: block;
@@ -51,66 +68,76 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
+            transition: background-color 0.2s;
         }
         .subservice-btn:hover {
             background-color: #F97316;
+        }
+        @media (max-width: 768px) {
+            .service-card {
+                width: 100px;
+            }
+            .service-icon {
+                width: 80px;
+                height: 80px;
+            }
         }
     </style>
 </head>
 <body>
     <h1>Выбери услугу</h1>
-    <div id="servicesContainer"></div>
+    <div id="servicesContainer" class="services-container"></div>
     <div id="subservicesContainer" class="subservices"></div>
 
     <script>
         // Данные об услугах и подуслугах
         const services = {
             "Ремонт под ключ": {
-                icon: "menu.json",
+                icon: "capy_repair_chest.png",
                 subservices: ["Комплексный ремонт", "Дизайн-проект", "Закупка материалов"]
             },
             "Электрика": {
-                icon: "electricity.json",
+                icon: "capy_electricity_chest.png",
                 subservices: ["Электромонтаж квартиры/дома", "Установка розеток/выключателей", "Монтаж люстр/светильников", "Прокладка проводки"]
             },
             "Сантехника": {
-                icon: "pipes.json",
+                icon: "capy_plumbing_large_wrench_chest.png",
                 subservices: ["Установка сантехники", "Установка душевых кабинок", "Прочистка засоров", "Замена труб", "Установка водонагревателей"]
             },
             "Строительно-отделочные работы": {
-                icon: "hammer.json",
+                icon: "capy_construction_chest.png",
                 subservices: ["Укладка плитки", "Гипсокартон", "Штукатурка и выравнивание", "Покраска стен/потолков", "Бетонные работы", "Демонтаж конструкций"]
             },
             "Мебель и сборка": {
-                icon: "furniture.json",
+                icon: "capy_furniture_chest.png",
                 subservices: ["Сборка мебели", "Навешивание полок, зеркал", "Ремонт мебели"]
             },
             "Напольные покрытия": {
-                icon: "flooring.json",
+                icon: "capy_flooring_chest.png",
                 subservices: ["Укладка ламината/паркета", "Монтаж линолеума"]
             },
             "Окна, двери": {
-                icon: "window.json",
+                icon: "capy_windows_chest.png",
                 subservices: ["Установка окон", "Монтаж дверей"]
             },
             "Фасадные и кровельные работы": {
-                icon: "roof.json",
+                icon: "capy_roofing_large_piece_chest.png",
                 subservices: ["Монтаж/ремонт кровли", "Утепление фасадов"]
             },
             "Сварочные работы": {
-                icon: "welding.json",
+                icon: "capy_welding_large_torch_chest.png",
                 subservices: ["Сварка металлоконструкций", "Сварка труб"]
             },
             "Мелкий бытовой ремонт": {
-                icon: "wrench.json",
+                icon: "capy_small_repair_chest.png",
                 subservices: ["Замена замков, ручек", "Ремонт розеток/выключателей", "Установка телевизоров"]
             },
             "Бытовая техника": {
-                icon: "appliance.json",
+                icon: "capy_appliance_chest.png",
                 subservices: ["Ремонт холодильников, стиральных машин", "Установка кондиционеров"]
             },
             "Дополнительные услуги": {
-                icon: "box.json",
+                icon: "capy_box_chest.png",
                 subservices: ["Установка видеодомофонов", "Услуги грузчика"]
             }
         };
@@ -127,7 +154,7 @@
         Object.entries(services).forEach(([service, data]) => {
             const card = document.createElement('div');
             card.className = 'service-card';
-            card.innerHTML = `<lottie-player src="${data.icon}" loop></lottie-player><p>${service}</p>`;
+            card.innerHTML = `<img src="${data.icon}" alt="${service}" class="service-icon" loading="lazy"><p>${service}</p>`;
             card.addEventListener('click', () => {
                 // Показать подуслуги
                 subservicesContainer.style.display = 'block';
